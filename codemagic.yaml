@@ -10,6 +10,6 @@ workflows:
           flutter pub get
       - name: Build iOS app
         script: |
-          flutter build ios --debug
+          flutter build ios --debug --simulator
     artifacts:
       - build/ios/iphoneos/Runner.app
