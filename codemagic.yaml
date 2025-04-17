@@ -1,15 +1,15 @@
 workflows:
-  ios-simulator-build:
-    name: iOS Simulator Build
+  ios-build:
+    name: iOS Build
     environment:
+      flutter: 3.29.2
       xcode: latest
-      cocoapods: default
     scripts:
       - name: Get Flutter packages
         script: |
           flutter pub get
-      - name: Build for iOS simulator
+      - name: Build iOS app
         script: |
-          flutter build ios --simulator
+          flutter build ios --release
     artifacts:
-      - build/ios/iphonesimulator/*.app
+      - build/ios/iphoneos/Runner.app
