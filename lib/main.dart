@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz_data;
@@ -9,6 +10,8 @@ import 'about.dart';
 import 'localization.dart';
 import 'timer_card.dart';
 import 'countdown_timer.dart';
+import 'settings.dart';
+import 'package:flutter/foundation.dart'; // Добавьте этот импорт
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,46 +25,49 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Countdown Timer',
-      theme: ThemeData.light(useMaterial3: true).copyWith(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
-          brightness: Brightness.light,
-        ),
-      ),
-      darkTheme: ThemeData.dark(useMaterial3: true).copyWith(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
-          brightness: Brightness.dark,
-        ),
-      ),
-      themeMode: ThemeMode.system,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => LocaleProvider()),
       ],
-      supportedLocales: const [
-        Locale('en', ''),
-        Locale('ru', ''),
-        Locale('kk', ''),
-      ],
-      localeResolutionCallback: (locale, supportedLocales) {
-        if (locale == null) return const Locale('kk');
-        for (var supportedLocale in supportedLocales) {
-          if (supportedLocale.languageCode == locale.languageCode) {
-            return supportedLocale;
-          }
-        }
-        return const Locale('kk');
-      },
-      home: const HomeScreen(),
-      debugShowCheckedModeBanner: false,
-      routes: {
-        '/about': (context) => AboutPage(),
-      },
+      child: Consumer2<ThemeProvider, LocaleProvider>(
+        builder: (context, themeProvider, localeProvider, child) {
+          return MaterialApp(
+            title: 'Countdown Timer',
+            theme: ThemeData.light(useMaterial3: true).copyWith(
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: Colors.deepPurple,
+                brightness: Brightness.light,
+              ),
+            ),
+            darkTheme: ThemeData.dark(useMaterial3: true).copyWith(
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: Colors.deepPurple,
+                brightness: Brightness.dark,
+              ),
+            ),
+            themeMode: themeProvider.themeMode,
+            locale: localeProvider.locale,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en', ''),
+              Locale('ru', ''),
+              Locale('kk', ''),
+            ],
+            routes: {
+              '/': (context) => const HomeScreen(),
+              '/about': (context) => AboutPage(),
+              '/settings': (context) => const SettingsPage(),
+            },
+            debugShowCheckedModeBanner: false,
+          );
+        },
+      ),
     );
   }
 }
@@ -319,57 +325,66 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget buildDrawer(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            child: Text(
+              localizations.translate('appTitle'),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onPrimary,
+                fontSize: 24,
+              ),
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.home),
+            title: Text(localizations.translate('home')),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushReplacementNamed(context, '/');
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.info),
+            title: Text(localizations.translate('about')),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/about');
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.settings),
+            title: Text(localizations.translate('settings')),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/settings');
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
     return Scaffold(
+      drawer: buildDrawer(context),
       appBar: AppBar(
         title: Text(localizations.translate('appTitle')),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () => _addOrUpdateTimer(),
-          ),
-          PopupMenuButton<String>(
-            icon: const Icon(Icons.more_vert),
-            onSelected: (value) {
-              if (value == 'timezone') {
-                _showTimezoneDialog();
-              } else if (value == 'about') {
-                Navigator.pushNamed(context, '/about');
-              } else if (value == 'toggle_completed') {
-                setState(() {
-                  _showCompletedTimers = !_showCompletedTimers;
-                });
-              } else if (value == 'toggle_help') {
-                setState(() {
-                  _showHelpText = !_showHelpText;
-                });
-              }
-            },
-            itemBuilder: (BuildContext context) => [
-              PopupMenuItem<String>(
-                value: 'timezone',
-                child: Text(localizations.translate('changeTimezone')),
-              ),
-              PopupMenuItem<String>(
-                value: 'toggle_completed',
-                child: Text(_showCompletedTimers
-                    ? localizations.translate('hideCompleted')
-                    : localizations.translate('showCompleted')),
-              ),
-              PopupMenuItem<String>(
-                value: 'toggle_help',
-                child: Text(_showHelpText
-                    ? localizations.translate('hideHelp')
-                    : localizations.translate('showHelp')),
-              ),
-              PopupMenuItem<String>(
-                value: 'about',
-                child: Text(localizations.translate('about')),
-              ),
-            ],
           ),
         ],
       ),

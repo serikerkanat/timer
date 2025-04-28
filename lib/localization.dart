@@ -191,6 +191,26 @@ class AppLocalizations {
         'ru': 'Выберите часовой пояс',
         'kk': 'Уақыт белдеуін таңдаңыз',
       }[locale.languageCode] ?? 'Select Timezone',
+      'settings': {
+        'en': 'Settings',
+        'ru': 'Настройки',
+        'kk': 'Баптаулар',
+      }[locale.languageCode] ?? 'Settings',
+      'theme': {
+        'en': 'Theme',
+        'ru': 'Тема',
+        'kk': 'Тақырып',
+      }[locale.languageCode] ?? 'Theme',
+      'language': {
+        'en': 'Language',
+        'ru': 'Язык',
+        'kk': 'Тіл',
+      }[locale.languageCode] ?? 'Language',
+      'home': {
+        'en': 'Home',
+        'ru': 'Главная',
+        'kk': 'Басты бет',
+      }[locale.languageCode] ?? 'Home',
     };
   }
 
