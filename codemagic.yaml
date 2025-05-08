@@ -1,19 +1,12 @@
 workflows:
-  ios-release:
+  ios-release-no-shorebird:
     name: iOS Release
     environment:
       flutter: stable
       xcode: latest
-    cache:
-      paths:
-        - $HOME/.pub-cache  # Используем $HOME вместо ~
-        - ios/Pods          # Путь от корня проекта
     scripts:
-      - flutter clean
-      - flutter pub get
-      - cd ios && pod install --repo-update && cd ..
-      - flutter build ios --release --no-codesign
+      - flutter build ios --simulator
       - mkdir -p build/ios/ipa
-      - cd build/ios/iphonesimulator && zip -r ../ipa/Runner.app.zip Runner.app
+      - zip -r build/ios/ipa/Runner.app.zip build/ios/iphonesimulator/Runner.app
     artifacts:
       - build/ios/ipa/Runner.app.zip
