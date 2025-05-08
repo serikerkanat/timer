@@ -5,12 +5,9 @@ workflows:
       flutter: stable
       xcode: latest
     scripts:
-      - cd ios
-      - pod init
-      - sed -i '' 's/# platform :ios, '\"'9.0\"'/platform :ios, '\"'13.0\"'/g' Podfile
-      - cd ..
       - flutter pub get
-      - flutter build ios --simulator
+      - cd ios && pod install --repo-update && cd ..  # Обновляем Pods
+      - flutter build ios --release --no-codesign  # Сборка для реального устройства
       - mkdir -p build/ios/ipa
       - zip -r build/ios/ipa/Runner.app.zip build/ios/iphonesimulator/Runner.app
     artifacts:
