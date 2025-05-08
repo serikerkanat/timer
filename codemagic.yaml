@@ -2,13 +2,12 @@ workflows:
   ios-release:
     name: iOS Release
     environment:
-      flutter: stable  # или конкретная версия, например "3.19.5"
+      flutter: stable
       xcode: latest
     cache:
       paths:
-        - ~/.pub-cache
-        - ios/Pods
-        # Другие пути для кэширования (если нужно)
+        - $HOME/.pub-cache  # Используем $HOME вместо ~
+        - ios/Pods          # Путь от корня проекта
     scripts:
       - flutter clean
       - flutter pub get
