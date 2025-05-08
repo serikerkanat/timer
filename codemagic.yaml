@@ -2,10 +2,13 @@ workflows:
   ios-release:
     name: iOS Release
     environment:
-      flutter: 3.19.5  # Фиксируем версию
+      flutter: stable  # или конкретная версия, например "3.19.5"
       xcode: latest
     cache:
-      cocoapods: false  # Отключаем кэш Pods
+      paths:
+        - ~/.pub-cache
+        - ios/Pods
+        # Другие пути для кэширования (если нужно)
     scripts:
       - flutter clean
       - flutter pub get
