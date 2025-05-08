@@ -1,17 +1,12 @@
 workflows:
-  ios-release-build:
-    name: iOS Release Build
+  ios-release-no-shorebird:
+    name: iOS Release
     environment:
       flutter: stable
       xcode: latest
     scripts:
-      - name: Install dependencies
-        script: |
-          flutter pub get
-          cd ios
-          pod install
-      - name: Build iOS release
-        script: |
-          flutter build ipa --release
+      - flutter build ios --simulator
+      - mkdir -p build/ios/ipa
+      - zip -r build/ios/ipa/Runner.app.zip build/ios/iphonesimulator/Runner.app
     artifacts:
-      - build/ios/ipa/*.ipa
+      - build/ios/ipa/Runner.app.zip
