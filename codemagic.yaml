@@ -2,10 +2,14 @@ workflows:
   ios-release:
     name: iOS Release
     environment:
-      flutter: stable
+      flutter: 3.19.5  # Фиксируем версию
       xcode: latest
+    cache:
+      cocoapods: false  # Отключаем кэш Pods
     scripts:
+      - flutter clean
       - flutter pub get
+      - cd ios && pod install --repo-update && cd ..
       - flutter build ios --release --no-codesign
       - mkdir -p build/ios/ipa
       - cd build/ios/iphonesimulator && zip -r ../ipa/Runner.app.zip Runner.app
