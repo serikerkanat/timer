@@ -291,6 +291,156 @@ class AppLocalizations {
         'ru': 'Продолжить как гость',
         'kk': 'Қонақ ретінде жалғастыру',
       }[locale.languageCode] ?? 'Continue as Guest',
+      'loginRequired': {
+        'en': 'Please log in to access this feature',
+        'ru': 'Пожалуйста, войдите, чтобы получить доступ к этой функции',
+        'kk': 'Бұл функцияға қол жеткізу үшін жүйеге кіріңіз',
+      }[locale.languageCode] ?? 'Please log in to access this feature',
+      'invalidEmail': {
+        'en': 'Please enter a valid email address',
+        'ru': 'Пожалуйста, введите действительный адрес электронной почты',
+        'kk': 'Жарамды электрондық пошта мекенжайын енгізіңіз',
+      }[locale.languageCode] ?? 'Please enter a valid email address',
+      'weakPassword': {
+        'en': 'Password must be at least 6 characters',
+        'ru': 'Пароль должен содержать не менее 6 символов',
+        'kk': 'Құпия сөз кемінде 6 таңба болуы керек',
+      }[locale.languageCode] ?? 'Password must be at least 6 characters',
+      'emailInUse': {
+        'en': 'An account already exists for this email',
+        'ru': 'Аккаунт с этим email уже существует',
+        'kk': 'Бұл электрондық поштамен тіркелгі бар',
+      }[locale.languageCode] ?? 'An account already exists for this email',
+      'userNotFound': {
+        'en': 'No user found with this email',
+        'ru': 'Пользователь с таким email не найден',
+        'kk': 'Бұл электрондық поштамен пайдаланушы табылмады',
+      }[locale.languageCode] ?? 'No user found with this email',
+      'wrongPassword': {
+        'en': 'Wrong password provided',
+        'ru': 'Неверный пароль',
+        'kk': 'Қате құпия сөз',
+      }[locale.languageCode] ?? 'Wrong password provided',
+      'invalidCredentials': {
+        'en': 'Invalid email or password',
+        'ru': 'Неверный email или пароль',
+        'kk': 'Қате электрондық пошта немесе құпия сөз',
+      }[locale.languageCode] ?? 'Invalid email or password',
+      'unexpectedError': {
+        'en': 'An unexpected error occurred',
+        'ru': 'Произошла непредвиденная ошибка',
+        'kk': 'Күтпеген қате орын алды',
+      }[locale.languageCode] ?? 'An unexpected error occurred',
+      'loginFailed': {
+        'en': 'Failed to log in',
+        'ru': 'Не удалось войти',
+        'kk': 'Жүйеге кіру сәтсіз аяқталды',
+      }[locale.languageCode] ?? 'Failed to log in',
+      'registerFailed': {
+        'en': 'Failed to register',
+        'ru': 'Не удалось зарегистрироваться',
+        'kk': 'Тіркелу сәтсіз аяқталды',
+      }[locale.languageCode] ?? 'Failed to register',
+      'googleSignInFailed': {
+        'en': 'Failed to sign in with Google',
+        'ru': 'Не удалось войти через Google',
+        'kk': 'Google арқылы кіру сәтсіз аяқталды',
+      }[locale.languageCode] ?? 'Failed to sign in with Google',
+      'guestSignInFailed': {
+        'en': 'Failed to continue as guest',
+        'ru': 'Не удалось продолжить как гость',
+        'kk': 'Қонақ ретінде жалғастыру сәтсіз аяқталды',
+      }[locale.languageCode] ?? 'Failed to continue as guest',
+      'signOutFailed': {
+        'en': 'Failed to sign out',
+        'ru': 'Не удалось выйти',
+        'kk': 'Жүйеден шығу сәтсіз аяқталды',
+      }[locale.languageCode] ?? 'Failed to sign out',
+      'preferencesUpdateFailed': {
+        'en': 'Failed to update preferences',
+        'ru': 'Не удалось обновить настройки',
+        'kk': 'Баптауларды жаңарту сәтсіз аяқталды',
+      }[locale.languageCode] ?? 'Failed to update preferences',
+      'preferencesLoadFailed': {
+        'en': 'Failed to load preferences',
+        'ru': 'Не удалось загрузить настройки',
+        'kk': 'Баптауларды жүктеу сәтсіз аяқталды',
+      }[locale.languageCode] ?? 'Failed to load preferences',
+      'offlineMode': {
+        'en': 'You are currently offline',
+        'ru': 'Вы работаете в автономном режиме',
+        'kk': 'Сіз қазір офлайн режимінде жұмыс істеудесіз',
+      }[locale.languageCode] ?? 'You are currently offline',
+      'sync': {
+        'en': 'Sync',
+        'ru': 'Синхронизировать',
+        'kk': 'Синхрондау',
+      }[locale.languageCode] ?? 'Sync',
+      'syncInProgress': {
+        'en': 'Syncing data...',
+        'ru': 'Синхронизация данных...',
+        'kk': 'Деректер синхрондалуда...',
+      }[locale.languageCode] ?? 'Syncing data...',
+      'syncComplete': {
+        'en': 'Sync complete',
+        'ru': 'Синхронизация завершена',
+        'kk': 'Синхрондау аяқталды',
+      }[locale.languageCode] ?? 'Sync complete',
+      'syncFailed': {
+        'en': 'Sync failed',
+        'ru': 'Ошибка синхронизации',
+        'kk': 'Синхрондау сәтсіз аяқталды',
+      }[locale.languageCode] ?? 'Sync failed',
+      'enableOfflineMode': {
+        'en': 'Enable Offline Mode',
+        'ru': 'Включить автономный режим',
+        'kk': 'Офлайн режимін қосу',
+      }[locale.languageCode] ?? 'Enable Offline Mode',
+      'setPin': {
+        'en': 'Set PIN',
+        'ru': 'Установить PIN',
+        'kk': 'PIN орнату',
+      }[locale.languageCode] ?? 'Set PIN',
+      'enterPin': {
+        'en': 'Enter PIN',
+        'ru': 'Введите PIN',
+        'kk': 'PIN енгізіңіз',
+      }[locale.languageCode] ?? 'Enter PIN',
+      'pinRequired': {
+        'en': 'PIN is required',
+        'ru': 'Требуется PIN',
+        'kk': 'PIN қажет',
+      }[locale.languageCode] ?? 'PIN is required',
+      'pinMismatch': {
+        'en': 'PINs do not match',
+        'ru': 'PIN-коды не совпадают',
+        'kk': 'PIN-кодтар сәйкес келмейді',
+      }[locale.languageCode] ?? 'PINs do not match',
+      'offlineLogin': {
+        'en': 'Offline Login',
+        'ru': 'Автономный вход',
+        'kk': 'Офлайн кіру',
+      }[locale.languageCode] ?? 'Offline Login',
+      'offlineLoginSuccess': {
+        'en': 'Offline login successful',
+        'ru': 'Автономный вход выполнен',
+        'kk': 'Офлайн кіру сәтті аяқталды',
+      }[locale.languageCode] ?? 'Offline login successful',
+      'offlineLoginFailed': {
+        'en': 'Offline login failed',
+        'ru': 'Ошибка автономного входа',
+        'kk': 'Офлайн кіру сәтсіз аяқталды',
+      }[locale.languageCode] ?? 'Offline login failed',
+      'lastSync': {
+        'en': 'Last sync:',
+        'ru': 'Последняя синхронизация:',
+        'kk': 'Соңғы синхрондау:',
+      }[locale.languageCode] ?? 'Last sync:',
+      'never': {
+        'en': 'Never',
+        'ru': 'Никогда',
+        'kk': 'Ешқашан',
+      }[locale.languageCode] ?? 'Never',
     };
   }
 

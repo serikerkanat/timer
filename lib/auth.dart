@@ -11,9 +11,27 @@ class AuthService {
       UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       return result.user;
+    } on FirebaseAuthException catch (e) {
+      String message;
+      switch (e.code) {
+        case 'user-not-found':
+          message = 'No user found with this email.';
+          break;
+        case 'wrong-password':
+          message = 'Wrong password provided.';
+          break;
+        case 'invalid-email':
+          message = 'The email address is invalid.';
+          break;
+        case 'user-disabled':
+          message = 'This user account has been disabled.';
+          break;
+        default:
+          message = 'An error occurred during sign in.';
+      }
+      throw AuthException(message);
     } catch (e) {
-      print(e.toString());
-      return null;
+      throw AuthException('An unexpected error occurred.');
     }
   }
 
@@ -29,9 +47,24 @@ class AuthService {
         'language': 'en',
       });
       return result.user;
+    } on FirebaseAuthException catch (e) {
+      String message;
+      switch (e.code) {
+        case 'weak-password':
+          message = 'The password provided is too weak.';
+          break;
+        case 'email-already-in-use':
+          message = 'An account already exists for this email.';
+          break;
+        case 'invalid-email':
+          message = 'The email address is invalid.';
+          break;
+        default:
+          message = 'An error occurred during registration.';
+      }
+      throw AuthException(message);
     } catch (e) {
-      print(e.toString());
-      return null;
+      throw AuthException('An unexpected error occurred.');
     }
   }
 
@@ -40,22 +73,37 @@ class AuthService {
     try {
       return await _auth.signOut();
     } catch (e) {
-      print(e.toString());
-      return null;
+      throw AuthException('Failed to sign out.');
     }
   }
 
   // Get user preferences
   Future<Map<String, dynamic>> getUserPreferences(String uid) async {
-    DocumentSnapshot doc = await _firestore.collection('users').doc(uid).get();
-    return doc.data() as Map<String, dynamic>;
+    try {
+      DocumentSnapshot doc = await _firestore.collection('users').doc(uid).get();
+      return doc.data() as Map<String, dynamic>;
+    } catch (e) {
+      throw AuthException('Failed to get user preferences.');
+    }
   }
 
   // Update user preferences
   Future updateUserPreferences(String uid, String theme, String language) async {
-    await _firestore.collection('users').doc(uid).update({
-      'theme': theme,
-      'language': language,
-    });
+    try {
+      await _firestore.collection('users').doc(uid).update({
+        'theme': theme,
+        'language': language,
+      });
+    } catch (e) {
+      throw AuthException('Failed to update user preferences.');
+    }
   }
+}
+
+class AuthException implements Exception {
+  final String message;
+  AuthException(this.message);
+  
+  @override
+  String toString() => message;
 }
